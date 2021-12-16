@@ -63,7 +63,7 @@ const Form = () => {
           value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
         />
-        <div classes={classes.fileInput}>
+        <div className={classes.fileInput}>
           <FileBase
             type="file"
             multiple={false}
