@@ -19,22 +19,23 @@ const input = ({
         variant="outlined"
         required
         fullWidth
-        InputLabelProps={label}
+        label={label}
         autoFocus={autoFocus}
         type={type}
-        label={label}
         InputProps={
-          name === "password" && {
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleShowPassword}>
-                  {type === "password" ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }
-          // : null //not to provide null ->  password -> (&&) <-
+          name === "password"
+            ? {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleShowPassword}>
+                      {type === "password" ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }
+            : null
         }
+        //not to provide null ->  password -> (&&) <-
       />
     </Grid>
   );
