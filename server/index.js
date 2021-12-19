@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import postRoutes from "./routes/posts.js";
+import userRoutes from "./routes/users.js";
 
 const app = express();
 //bodyparser
@@ -16,7 +17,7 @@ app.use(
 app.use(cors());
 
 app.use("/posts", postRoutes);
-
+app.use("/user", userRoutes);
 dotenv.config({ path: "config.env" });
 const PORT = process.env.PORT || 8080;
 mongoose

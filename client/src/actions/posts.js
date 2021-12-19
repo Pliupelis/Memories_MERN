@@ -6,7 +6,7 @@ import {
   LIKE,
 } from "../constants/actionTypes";
 
-import * as api from "../api";
+import * as api from "../api/";
 
 //action creators
 export const getPosts = () => async (dispatch) => {
