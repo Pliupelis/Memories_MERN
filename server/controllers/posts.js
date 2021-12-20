@@ -4,25 +4,51 @@ import mongoose from "mongoose";
 
 const router = express.Router();
 
-export const getPosts = async (req, res) => {
+export const getPost = async (req, res) => {
+  const { id } = req.params;
   try {
-    const postMessages = await PostMsg.find();
-
-    res.status(200).json(postMessages);
+    const post = await PostMsg.findById(id);
+    res.status(200).json(post);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
-export const getPost = async (req, res) => {
-  const { id } = req.params;
-
+export const getPosts = async (req, res) => {
+  const { page } = req.query;
   try {
-    const post = await PostMsg.findById(id);
+    const LIMIT = 8;
+    const startIndex = (Number(page) - 1) * LIMIT; //starting index of every page
+    const total = await PostMsg.countDocuments({});
+    const posts = await PostMsg.find()
+      .sort({ _id: -1 })
+      .limit(LIMIT)
+      .skip(startIndex);
 
-    res.status(200).json(post);
+    res.status(200).json({
+      data: posts,
+      currentPage: Number(page),
+      numberOfPages: Math.ceil(total / LIMIT),
+    });
   } catch (error) {
     res.status(404).json({ message: error.message });
+  }
+};
+//query /posts?page=1 page= /search
+//params /posts/121 :id /resource like post->it's id
+export const getPostsBySearch = async (req, res) => {
+  const { searchQuery, tags } = req.query;
+
+  try {
+    const title = new RegExp(searchQuery, "i");
+
+    const posts = await PostMsg.find({
+      $or: [{ title }, { tags: { $in: tags.split(",") } }],
+    });
+
+    res.json({ data: posts });
+  } catch (error) {
+    res.status(404).json({ error: error.nessage });
   }
 };
 
