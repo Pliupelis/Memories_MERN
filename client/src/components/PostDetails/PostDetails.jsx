@@ -10,6 +10,7 @@ import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { getPost, getPostsBySearch } from "../../actions/posts";
+import CommentSection from "./CommentSection";
 import useStyles from "./styles";
 
 const Post = () => {
@@ -72,9 +73,7 @@ const Post = () => {
             <strong>Realtime Chat - coming soon!</strong>
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
-          <Typography variant="body1">
-            <strong>Comments - coming soon!</strong>
-          </Typography>
+          <CommentSection post={post} />
           <Divider style={{ margin: "20px 0" }} />
         </div>
         <div className={classes.imageSection}>
@@ -98,7 +97,7 @@ const Post = () => {
             {recommendedPosts.map(
               ({ title, name, message, likes, selectedFile, _id }) => (
                 <div
-                  style={{ margin: "20px", width: "400px", cursor: "pointer" }}
+                  style={{ margin: "20px", cursor: "pointer" }}
                   onClick={() => openPost(_id)}
                   key={_id}
                 >
@@ -114,7 +113,7 @@ const Post = () => {
                   <Typography gutterBottom variant="subtitle1">
                     Likes: {likes.length}
                   </Typography>
-                  <img src={selectedFile} width="200px" alt={`${name}`} />
+                  <img src={selectedFile} width="200px" />
                 </div>
               )
             )}
